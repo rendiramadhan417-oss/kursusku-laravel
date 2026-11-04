@@ -1,132 +1,122 @@
-```html
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kursusku</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+@extends('layouts.app')
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #dbeafe, #ede9fe, #ffffff);
-            color: #111827;
-        }
+@section('title', 'Beranda - KursusKu Informatika Rendy')
 
-        nav {
-            background: linear-gradient(120deg, #1e3a8a, #5b21b6);
-            color: white;
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
+@section('content')
 
-        nav h2 {
-            margin: 0;
-        }
+<!-- HERO / BAGIAN SAMBUTAN -->
+<div class="p-4 p-md-5 mb-4 rounded-4 text-white"
+     style="background: linear-gradient(120deg, #080b18, #312e81, #2563eb);">
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 18px;
-            font-weight: bold;
-        }
+    <div class="row align-items-center g-4">
 
-        .hero {
-            max-width: 1100px;
-            margin: 60px auto;
-            padding: 55px 30px;
-            text-align: center;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(91, 33, 182, .12);
-        }
-
-        .hero h1 {
-            color: #5b21b6;
-            font-size: 42px;
-        }
-
-        .hero p {
-            color: #64748b;
-            line-height: 1.8;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 13px 24px;
-            background: linear-gradient(120deg, #2563eb, #6d28d9);
-            color: white;
-            text-decoration: none;
-            border-radius: 9px;
-            font-weight: bold;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #111827;
-            color: white;
-        }
-
-        @media (max-width: 600px) {
-            .hero {
-                margin: 25px 15px;
-                padding: 35px 20px;
-            }
-
-            .hero h1 {
-                font-size: 30px;
-            }
-
-            nav a {
-                margin-left: 0;
-                margin-right: 12px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <nav>
-        <h2>Kursusku</h2>
-
-        <div>
-            <a href="/">Beranda</a>
-            <a href="{{ route('enrollments.create') }}">Pendaftaran</a>
+        <!-- LOGO KIRI -->
+        <div class="col-md-2 text-center">
+            <img src="{{ asset('images/kursusku-logo.png') }}"
+                 alt="Logo KursusKu"
+                 style="width: 140px; height: 140px; object-fit: contain;">
         </div>
-    </nav>
 
-    <main class="hero">
-        <h1>Selamat Datang di Kursusku</h1>
+        <!-- TULISAN TENGAH -->
+        <div class="col-md-6">
+            <h1 class="fw-bold">
+                Selamat Datang di KURSUSKU
+            </h1>
 
-        <p>
-            Tingkatkan kemampuan dan pengetahuan kamu melalui
-            berbagai pilihan kursus yang tersedia.
-        </p>
+            <h4 class="fw-semibold" style="color: #c4b5fd;">
+                Informatika Rendy
+            </h4>
 
-        <p>
-            Mulai belajar pemrograman web, PHP, dan Laravel
-            bersama Kursusku.
-        </p>
+            <p class="mb-0">
+                Platform Pembelajaran Teknologi dan Informatika.
+                Tingkatkan kemampuanmu bersama KursusKu.
+            </p>
+        </div>
 
-        <a href="{{ route('enrollments.create') }}" class="btn">
-            Daftar Kursus Sekarang
-        </a>
-    </main>
+        <!-- BANNER KANAN -->
+        <div class="col-md-4 text-center">
+            <img src="{{ asset('images/kursusku-banner.png') }}"
+                 alt="Banner KursusKu"
+                 class="img-fluid rounded-4"
+                 style="width: 100%; max-height: 240px; object-fit: contain;">
+        </div>
 
-    <footer>
-        &copy; {{ date('Y') }} Kursusku. Semua hak dilindungi.
-    </footer>
-</body>
-</html>
-```
+    </div>
+
+    <hr class="border-light opacity-25 my-4">
+
+    <p class="fs-5">
+        Tingkatkan kemampuan dan pengetahuan melalui berbagai
+        pilihan kursus yang tersedia.
+    </p>
+
+    <a href="{{ route('enrollments.create') }}"
+       class="btn btn-light text-primary fw-bold px-4">
+        Daftar Sekarang
+    </a>
+
+</div>
+
+<!-- PILIHAN KURSUS -->
+<h3 class="fw-bold mb-4">Pilihan Kursus</h3>
+
+<div class="row g-4">
+
+    <!-- WEB DASAR -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100 rounded-4">
+            <div class="card-body p-4">
+                <h5 class="fw-bold">Web Dasar</h5>
+                <p class="text-secondary">
+                    Pelajari dasar pembuatan website menggunakan
+                    HTML, CSS, dan JavaScript.
+                </p>
+
+                <a href="{{ route('enrollments.create') }}"
+                   class="btn btn-outline-primary">
+                    Lihat Kursus
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHP DASAR -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100 rounded-4">
+            <div class="card-body p-4">
+                <h5 class="fw-bold">PHP Dasar</h5>
+                <p class="text-secondary">
+                    Pelajari pemrograman PHP untuk membangun
+                    website yang dinamis.
+                </p>
+
+                <a href="{{ route('enrollments.create') }}"
+                   class="btn btn-outline-primary">
+                    Lihat Kursus
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- LARAVEL DASAR -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100 rounded-4">
+            <div class="card-body p-4">
+                <h5 class="fw-bold">Laravel Dasar</h5>
+                <p class="text-secondary">
+                    Pelajari framework Laravel untuk membuat
+                    aplikasi web modern.
+                </p>
+
+                <a href="{{ route('enrollments.create') }}"
+                   class="btn btn-outline-primary">
+                    Lihat Kursus
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@endsection
