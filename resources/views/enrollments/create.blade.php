@@ -1,10 +1,9 @@
-
+```php
 @extends('layouts.app')
 
-@section('title', 'Pendaftaran Kursus - Kursusku')
+@section('title', 'Tambah Enrollment - KursusKu')
 
 @section('content')
-
 <div class="row justify-content-center">
     <div class="col-md-8">
 
@@ -12,7 +11,7 @@
 
             <div class="card-header text-white p-3"
                  style="background: linear-gradient(90deg, #312e81, #2563eb);">
-                <h4 class="mb-0">Form Pendaftaran Kursus</h4>
+                <h4 class="mb-0">Tambah Enrollment</h4>
             </div>
 
             <div class="card-body p-4">
@@ -33,102 +32,87 @@
                     </div>
                 @endif
 
-                <form action="{{ route('enrollments.preview') }}" method="POST">
+                <form action="{{ route('enrollments.store') }}" method="POST">
                     @csrf
 
+                    {{-- Pilihan Peserta --}}
                     <div class="mb-3">
-                        <label class="form-label">Nama Lengkap</label>
-                        <input type="text"
-                               name="name"
-                               class="form-control"
-                               placeholder="Masukkan nama lengkap"
-                               value="{{ old('name') }}"
-                               required>
+                        <label for="participant_id" class="form-label">
+                            Nama Peserta
+                        </label>
+
+                        <select name="participant_id"
+                                id="participant_id"
+                                class="form-select"
+                                required>
+
+                            <option value="">-- Pilih Peserta --</option>
+
+                            @foreach($participants as $participant)
+                                <option value="{{ $participant->id }}"
+                                    @selected(old('participant_id') == $participant->id)>
+                                    {{ $participant->name }} - {{ $participant->email }}
+                                </option>
+                            @endforeach
+
+                        </select>
+
+                        @error('participant_id')
+                            <div class="text-danger small mt-1">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
+                    {{-- Pilihan Kursus --}}
                     <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email"
-                               name="email"
-                               class="form-control"
-                               placeholder="Masukkan email"
-                               value="{{ old('email') }}"
-                               required>
-                    </div>
+                        <label for="course_id" class="form-label">
+                            Pilih Kursus
+                        </label>
 
-                    <div class="mb-3">
-                        <label class="form-label">Pilih Kursus</label>
-
-                        <select name="course_code"
-                                id="courseSelect"
+                        <select name="course_id"
+                                id="course_id"
                                 class="form-select"
                                 required>
 
                             <option value="">-- Pilih Kursus --</option>
 
-                            <option value="WEB-01" data-course-id="1"
-                                {{ old('course_code') == 'WEB-01' ? 'selected' : '' }}>
-                                Web Dasar
-                            </option>
-
-                            <option value="PHP-01" data-course-id="2"
-                                {{ old('course_code') == 'PHP-01' ? 'selected' : '' }}>
-                                PHP Dasar
-                            </option>
-
-                            <option value="LAR-01" data-course-id="3"
-                                {{ old('course_code') == 'LAR-01' ? 'selected' : '' }}>
-                                Laravel Dasar
-                            </option>
+                            @foreach($courses as $course)
+                                <option value="{{ $course->id }}"
+                                    @selected(old('course_id') == $course->id)>
+                                    {{ $course->code }} - {{ $course->name }}
+                                </option>
+                            @endforeach
 
                         </select>
 
-                        <div id="availability" class="mt-2 text-primary fw-bold">
-                            Silakan pilih kursus untuk melihat sisa kursi.
-                        </div>
+                        @error('course_id')
+                            <div class="text-danger small mt-1">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Jenis Peserta</label>
-                        <select name="participant_type" class="form-select" required>
-                            <option value="">-- Pilih Jenis Peserta --</option>
-                            <option value="Mahasiswa">Mahasiswa</option>
-                            <option value="Umum">Umum</option>
-                        </select>
+                    {{-- Informasi Status --}}
+                    <div class="alert alert-info">
+                        <strong>Informasi:</strong>
+                        Status pendaftaran akan otomatis diatur menjadi
+                        <strong>registered</strong>.
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Metode Pembelajaran</label>
-                        <select name="learning_mode" class="form-select" required>
-                            <option value="">-- Pilih Metode --</option>
-                            <option value="Online">Online</option>
-                            <option value="Offline">Offline</option>
-                        </select>
-                    </div>
+                    {{-- Tombol --}}
+                    <div class="d-flex gap-2">
+                        <button type="submit"
+                                class="btn text-white fw-bold"
+                                style="background: #4338ca;">
+                            Simpan Enrollment
+                        </button>
 
-                    <div class="mb-3">
-                        <label class="form-label">Jumlah Paket</label>
-                        <input type="number"
-                               name="package_count"
-                               class="form-control"
-                               min="1"
-                               value="1"
-                               required>
+                        <a href="{{ route('enrollments.index') }}"
+                           class="btn btn-outline-secondary">
+                            Kembali
+                        </a>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Catatan</label>
-                        <textarea name="notes"
-                                  class="form-control"
-                                  rows="3"
-                                  placeholder="Catatan tambahan">{{ old('notes') }}</textarea>
-                    </div>
-
-                    <button type="submit"
-                            class="btn text-white w-100 fw-bold"
-                            style="background: #4338ca;">
-                        Lanjutkan Pendaftaran
-                    </button>
 
                 </form>
 
@@ -137,5 +121,5 @@
 
     </div>
 </div>
-
 @endsection
+```

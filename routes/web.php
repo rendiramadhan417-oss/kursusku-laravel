@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Halaman utama
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Halaman pendaftaran lama
 Route::get('/pendaftaran', function () {
     $courses = [
         1 => ['name' => 'Web Dasar'],
@@ -16,8 +19,9 @@ Route::get('/pendaftaran', function () {
     ];
 
     return view('enrollments.create', compact('courses'));
-})->name('enrollments.create');
+})->name('pendaftaran.create');
 
+// Preview pendaftaran lama
 Route::post('/pendaftaran/preview', function (Request $request) {
     $data = $request->validate([
         'name'      => ['required', 'string', 'min:3', 'max:100'],
@@ -30,6 +34,7 @@ Route::post('/pendaftaran/preview', function (Request $request) {
         ->withInput();
 })->name('enrollments.preview');
 
+// Cek ketersediaan course
 Route::get('/courses/{course}/availability', function (int $course) {
     $availability = [
         1 => ['course' => 'Web Dasar',     'remaining' => 12],
@@ -42,4 +47,9 @@ Route::get('/courses/{course}/availability', function (int $course) {
     return response()->json($availability[$course]);
 })->name('courses.availability');
 
+// CRUD Course
 Route::resource('courses', CourseController::class);
+
+// CRUD Enrollment Praktikum Pertemuan 12
+Route::resource('enrollments', EnrollmentController::class)
+    ->only(['index', 'create', 'store']);
